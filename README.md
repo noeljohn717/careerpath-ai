@@ -1,1 +1,1 @@
-# careerpath.ai
+# careerpath-ai
