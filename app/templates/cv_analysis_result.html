@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Resume Analysis Result - CareerPath.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4 text-white">Resume Analysis Result</h1>
+    
+    <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+            <h5 class="card-title text-white">📄 Analysis Feedback</h5>
+            <p class="text-white">{{ analysis }}</p>
+        </div>
+    </div>
+    
+    <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+            <h5 class="card-title text-white">🎯 Career Recommendations</h5>
+            <ul class="text-white">
+                {% for suggestion in suggestions %}
+                <li>🔹 {{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    <!-- DYNAMIC JOB POSTINGS SECTION -->
+    <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+            <h5 class="card-title text-white">💼 Matching Job Opportunities</h5>
+            
+            <div class="row">
+                {% for job in job_postings %}
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100" style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div class="card-body">
+                            <h5 class="card-title text-white">{{ job.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-white-50">{{ job.company }} • {{ job.location }}</h6>
+                            <p class="card-text small text-info">Posted: {{ job.date_posted }}</p>
+                            <p class="card-text text-white-50">{{ job.description }}</p>
+                            <a href="{{ job.url }}" target="_blank" class="btn btn-sm" style="background-color: #4cafef; color: white;">View Job</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+            <h5 class="card-title text-white">Upload Another Resume</h5>
+            <form action="{{ url_for('main.analyze_resume') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="resume_file" accept=".pdf,.txt,.doc,.docx" class="form-control mb-2" required>
+                <button type="submit" class="btn" style="background-color: #4cafef; color: white;">Analyze</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="{{ url_for('main.dashboard') }}" class="btn" style="background-color: #6c757d; color: white;">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

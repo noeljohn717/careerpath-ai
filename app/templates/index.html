@@ -1,12 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head><title>CareerPath.ai</title></head>
-<body>
-  <h1>Welcome to CareerPath.ai</h1>
-  <a href="/login">Login</a>
-  <form action="/suggest" method="post">
-    <input type="text" name="skills" placeholder="Enter your skills">
-    <button type="submit">Get Recommendations</button>
-  </form>
-</body>
-</html>
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block title %}Welcome - CareerPath.ai{% endblock %}
+
+{% block content %}
+<div class="text-center d-flex flex-column justify-content-center align-items-center" style="min-height: 80vh; width: 100%;">
+  <div class="mb-5">
+    <h1 class="display-3 fw-bold mb-3">CareerPath.ai</h1>
+    <p class="lead mb-5">Find your best career path with AI-powered guidance 🚀</p>
+
+    <div class="mt-5">
+      <a href="{{ url_for('auth.register') }}" class="button btn-lg">Get Started</a>
+      <div class="mt-4">
+        <a href="{{ url_for('auth.login') }}" style="color: #fff; text-decoration: underline;">
+          Already have an account? Login
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

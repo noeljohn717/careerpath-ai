@@ -1,0 +1,46 @@
+<h1>👤 My Profile</h1>
+
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+<p><strong>Status:</strong> {{ "Premium User" if user.is_premium else "Free User" }}</p>
+
+<h2>📈 Career Suggestions:</h2>
+<ul>
+    <body>
+        {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for message in messages %}
+        <div class="alert alert-info">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+    </body>
+{% for result in career_results %}
+  <li>{{ result.suggestion }}</li>
+{% else %}
+  <li>No career suggestions yet.</li>
+{% endfor %}
+</ul>
+
+<h2>📄 Resume Feedback:</h2>
+<ul>
+{% for feedback in resume_feedbacks %}
+  <li>{{ feedback.feedback }}</li>
+{% else %}
+  <li>No resume feedback yet.</li>
+{% endfor %}
+</ul>
+
+<h2>🧠 Personality Matches:</h2>
+<ul>
+{% for match in personality_results %}
+  <li>{{ match.role_match }}</li>
+{% else %}
+  <li>No personality matches yet.</li>
+{% endfor %}
+</ul>
+
+<a href="/dashboard" class="button">🏠 Back to Dashboard</a>

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Personality Quiz - CareerPath.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-white mb-3">🧠 Career Personality Quiz</h1>
+        <p class="lead text-white-50">Answer these questions to discover your ideal career path</p>
+      </div>
+
+      <div class="card shadow-lg" style="background: linear-gradient(135deg, rgba(76, 175, 239, 0.1), rgba(189, 107, 255, 0.1)); border: none; border-radius: 15px;">
+        <div class="card-body p-4 p-md-5">
+          <form method="post" action="/quiz-result">
+            
+            <div class="mb-4">
+              <label class="form-label text-white fw-bold fs-5">Do you like working with people?</label>
+              <div class="d-flex justify-content-center gap-5 mt-2">
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="people-yes" name="people" value="yes" required>
+                  <label class="form-check-label text-white" for="people-yes">Yes</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="people-no" name="people" value="no">
+                  <label class="form-check-label text-white" for="people-no">No</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-white fw-bold fs-5">Do you prefer creative work?</label>
+              <div class="d-flex justify-content-center gap-5 mt-2">
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="creative-yes" name="creative" value="yes" required>
+                  <label class="form-check-label text-white" for="creative-yes">Yes</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="creative-no" name="creative" value="no">
+                  <label class="form-check-label text-white" for="creative-no">No</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-white fw-bold fs-5">Do you like data & analysis?</label>
+              <div class="d-flex justify-content-center gap-5 mt-2">
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="data-yes" name="data" value="yes" required>
+                  <label class="form-check-label text-white" for="data-yes">Yes</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="data-no" name="data" value="no">
+                  <label class="form-check-label text-white" for="data-no">No</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-white fw-bold fs-5">Do you enjoy problem-solving?</label>
+              <div class="d-flex justify-content-center gap-5 mt-2">
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="problem-yes" name="problem_solving" value="yes" required>
+                  <label class="form-check-label text-white" for="problem-yes">Yes</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="problem-no" name="problem_solving" value="no">
+                  <label class="form-check-label text-white" for="problem-no">No</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-white fw-bold fs-5">Do you prefer working independently?</label>
+              <div class="d-flex justify-content-center gap-5 mt-2">
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="independent-yes" name="independent" value="yes" required>
+                  <label class="form-check-label text-white" for="independent-yes">Yes</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="independent-no" name="independent" value="no">
+                  <label class="form-check-label text-white" for="independent-no">No</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-white fw-bold fs-5">Are you interested in technology?</label>
+              <div class="d-flex justify-content-center gap-5 mt-2">
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="tech-yes" name="tech" value="yes" required>
+                  <label class="form-check-label text-white" for="tech-yes">Yes</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="tech-no" name="tech" value="no">
+                  <label class="form-check-label text-white" for="tech-no">No</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center mt-5">
+              <button type="submit" class="btn btn-lg px-5 py-3" style="background-color: #4cafef; color: white; border-radius: 30px; font-weight: bold;">Submit Quiz</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

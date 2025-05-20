@@ -1,0 +1,31 @@
+<h1>Admin Dashboard</h1>
+<table>
+    <body>
+        {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for message in messages %}
+        <div class="alert alert-info">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+    </body>
+  <tr>
+    <th>Username</th><th>Email</th><th>Admin</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+    <td>{{ user.username }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ 'Yes' if user.is_admin else 'No' }}</td>
+  </tr>
+  {% endfor %}
+
+  <form action="/make-premium/{{ user.id }}" method="post" style="display:inline;">
+    <button type="submit">⭐ Make Premium</button>
+</form>
+
+</table>
+

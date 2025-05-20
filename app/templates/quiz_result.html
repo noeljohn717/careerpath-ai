@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz Result - CareerPath.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-white mb-3">🎉 Your Career Match</h1>
+        <p class="lead text-white-50">Based on your personality quiz responses</p>
+      </div>
+
+      <div class="card shadow-lg text-center mb-4" style="background: linear-gradient(135deg, rgba(76, 175, 239, 0.2), rgba(189, 107, 255, 0.2)); border: none; border-radius: 15px;">
+        <div class="card-body p-5">
+          <div class="mb-4">
+            <span class="badge rounded-pill p-2 px-3 mb-3" style="background-color: #4cafef; font-size: 1em;">Perfect Match</span>
+            <h2 class="display-5 fw-bold text-white">{{ role }}</h2>
+          </div>
+          
+          {% set role_descriptions = {
+            "Marketing Specialist": "You thrive in creative environments where you can collaborate with others. You enjoy developing campaigns and have a keen understanding of what resonates with audiences.",
+            "Project Manager": "You excel at organizing and leading teams while tracking data-driven metrics. Your people skills and analytical mindset make you perfect for managing complex projects.",
+            "Data Visualization Engineer": "You have the rare ability to make complex data engaging and beautiful. Your technical, creative, and analytical skills combine to communicate insights effectively.",
+            "Data Scientist": "You have a natural talent for finding patterns in data and solving complex problems. Your technical and analytical skills make you perfect for creating predictive models.",
+            "UX/UI Designer": "Your technical knowledge and creative eye help you design beautiful interfaces that people love using. You understand both human psychology and technology.",
+            "Frontend Developer": "You enjoy creating beautiful, interactive experiences. Your combination of technical skills and creativity makes you perfect for building engaging websites and applications.",
+            "Backend Developer": "You excel at solving complex problems independently. Your technical skills and focus make you ideal for building robust systems that power applications.",
+            "DevOps Engineer": "You enjoy bridging the gap between development and operations, collaborating with teams to build efficient processes and systems.",
+            "Team Leader": "Your people skills and problem-solving abilities make you a natural leader who can inspire and guide teams to success.",
+            "Digital Marketing Specialist": "You combine creativity with technical knowledge to create engaging digital campaigns that connect with audiences.",
+            "Marketing Manager": "Your creativity and people skills make you excellent at developing marketing strategies and leading teams to implement them.",
+            "Human Resources Specialist": "You have a natural talent for understanding and supporting people, making you perfect for fostering positive workplace cultures.",
+            "Graphic Designer": "Your creative vision and technical skills allow you to produce visual content that communicates effectively and beautifully.",
+            "Digital Content Creator": "You thrive at the intersection of technology and creativity, producing engaging content across digital platforms.",
+            "Creative Director": "Your creative vision and leadership abilities make you perfect for guiding teams in developing cohesive creative projects.",
+            "Data Analyst": "Your analytical mindset and independence allow you to extract meaningful insights from complex datasets.",
+            "Business Intelligence Analyst": "You excel at translating data into business insights that help organizations make strategic decisions.",
+            "Versatile Professional": "Your balanced skill set allows you to adapt to various roles and industries, making you highly valuable in dynamic environments."
+          } %}
+          
+          {% if role in role_descriptions %}
+            <p class="lead text-white mb-4">{{ role_descriptions[role] }}</p>
+          {% endif %}
+          
+          <div class="row mt-4">
+            <div class="col-md-6 mb-3">
+              <div class="p-3 rounded" style="background-color: rgba(255, 255, 255, 0.1);">
+                <h5 class="text-white">Key Strengths</h5>
+                <ul class="text-white-50 text-start">
+                  {% if "Data" in role or "Analyst" in role %}
+                    <li>Analytical thinking</li>
+                    <li>Pattern recognition</li>
+                    <li>Attention to detail</li>
+                  {% elif "Manager" in role or "Leader" in role %}
+                    <li>Team leadership</li>
+                    <li>Strategic planning</li>
+                    <li>Communication</li>
+                  {% elif "Marketing" in role %}
+                    <li>Creativity</li>
+                    <li>Communication</li>
+                    <li>Strategic thinking</li>
+                  {% elif "Developer" in role or "Engineer" in role %}
+                    <li>Problem solving</li>
+                    <li>Technical expertise</li>
+                    <li>Logical thinking</li>
+                  {% elif "Designer" in role %}
+                    <li>Visual creativity</li>
+                    <li>User empathy</li>
+                    <li>Aesthetic sense</li>
+                  {% else %}
+                    <li>Adaptability</li>
+                    <li>Diverse skill set</li>
+                    <li>Quick learning</li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="p-3 rounded" style="background-color: rgba(255, 255, 255, 0.1);">
+                <h5 class="text-white">Growth Opportunities</h5>
+                <ul class="text-white-50 text-start">
+                  {% if "Data" in role or "Analyst" in role %}
+                    <li>Advanced visualization tools</li>
+                    <li>Machine learning</li>
+                    <li>Industry specialization</li>
+                  {% elif "Manager" in role or "Leader" in role %}
+                    <li>Advanced certifications</li>
+                    <li>Industry networking</li>
+                    <li>Mentorship programs</li>
+                  {% elif "Marketing" in role %}
+                    <li>Digital analytics</li>
+                    <li>Consumer psychology</li>
+                    <li>Emerging platforms</li>
+                  {% elif "Developer" in role or "Engineer" in role %}
+                    <li>New programming languages</li>
+                    <li>System architecture</li>
+                    <li>Cloud technologies</li>
+                  {% elif "Designer" in role %}
+                    <li>User research methods</li>
+                    <li>Design systems</li>
+                    <li>Prototyping tools</li>
+                  {% else %}
+                    <li>Specialized certifications</li>
+                    <li>Cross-functional skills</li>
+                    <li>Industry knowledge</li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4 mb-5">
+        <a href="/dashboard" class="btn btn-lg px-5" style="background-color: #4cafef; color: white; border-radius: 30px;">Return to Dashboard</a>
+        <a href="/quiz" class="btn btn-lg px-5 ms-2" style="background-color: rgba(255, 255, 255, 0.2); color: white; border-radius: 30px;">Retake Quiz</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

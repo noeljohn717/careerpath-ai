@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+  <form method="POST">
+    <input type="text" name="question" placeholder="Ask something..." required>
+    <button type="submit">Ask</button>
+  </form>
+
+  {% if question %}
+    <p><strong>You asked:</strong> {{ question }}</p>
+    <p><strong>Groq's Answer:</strong> {{ answer }}</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}AI Career Chat - CareerPath.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+          <h3 class="card-title text-center text-white mb-4">💬 Chat with AI Career Coach</h3>
+          
+          <!-- Chat messages display area -->
+          <div id="chat-messages" class="mb-4" style="max-height: 400px; overflow-y: auto;">
+            <!-- Display AI welcome message if no replies yet -->
+            {% if not reply %}
+            <div class="d-flex mb-3">
+              <div class="mr-3" style="min-width: 40px; width: 40px; height: 40px; border-radius: 50%; background-color: #4cafef; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                <span style="color: white; font-weight: bold;">AI</span>
+              </div>
+              <div class="p-3" style="background-color: rgba(76, 175, 239, 0.3); border-radius: 15px; flex-grow: 1;">
+                <p class="mb-0 text-white">Hello! I'm your AI career coach. I can help with job recommendations, skill assessments, resume advice, and more. What career questions do you have today?</p>
+              </div>
+            </div>
+            {% endif %}
+            
+            <!-- Display user message and AI reply if exists -->
+            {% if reply %}
+              <!-- User message -->
+              <div class="d-flex mb-3">
+                <div class="mr-3" style="min-width: 40px; width: 40px; height: 40px; border-radius: 50%; background-color: #6c757d; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                  <span style="color: white; font-weight: bold;">You</span>
+                </div>
+                <div class="p-3" style="background-color: rgba(108, 117, 125, 0.3); border-radius: 15px; flex-grow: 1;">
+                  <p class="mb-0 text-white">{{ request.form.get('message', '') }}</p>
+                </div>
+              </div>
+              
+              <!-- AI reply -->
+              <div class="d-flex">
+                <div class="mr-3" style="min-width: 40px; width: 40px; height: 40px; border-radius: 50%; background-color: #4cafef; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                  <span style="color: white; font-weight: bold;">AI</span>
+                </div>
+                <div class="p-3" style="background-color: rgba(76, 175, 239, 0.3); border-radius: 15px; flex-grow: 1;">
+                  {% for paragraph in reply.split('\n\n') %}
+                    <p class="mb-2 text-white">{{ paragraph|safe }}</p>
+                  {% endfor %}
+                  
+                  {% if not '\n\n' in reply %}
+                    {% for paragraph in reply.split('\n') %}
+                      {% if paragraph.strip() %}
+                        <p class="mb-2 text-white">{{ paragraph|safe }}</p>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          
+          <!-- Message input form -->
+          <form method="POST" class="mt-4">
+            <div class="form-group">
+              <textarea name="message" class="form-control" rows="3" placeholder="Ask me about career paths, skills, resume advice..." style="background-color: rgba(255, 255, 255, 0.2); color: white; border: none;" required></textarea>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn mt-2" style="background-color: #4cafef; color: white; min-width: 120px;">
+                <i class="fas fa-paper-plane mr-2"></i>Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <div class="text-center mt-3">
+        <a href="{{ url_for('main.dashboard') }}" class="btn" style="background-color: #6c757d; color: white;">
+          <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Auto-scroll to bottom of chat when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    var chatMessages = document.getElementById('chat-messages');
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  });
+</script>
+{% endblock %}

@@ -1,4 +1,112 @@
-from app import app
+from app import create_app
+from flask import render_template_string
 
-if __name__ == "__main__":
+# Create the Flask app
+app = create_app()
+
+@app.route('/jobs')
+def jobs():
+    jobs_html = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>Job Postings</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      <style>
+        body {
+          background: linear-gradient(to right, #6a11cb, #2575fc);
+          color: white;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          min-height: 100vh;
+          padding: 20px;
+        }
+        .card {
+          background-color: rgba(255, 255, 255, 0.1) !important;
+          border: none !important;
+        }
+        .job-card {
+          background-color: rgba(255, 255, 255, 0.05) !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        .btn-primary {
+          background-color: #4cafef !important;
+          border: none !important;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container mt-5">
+        <h1 class="text-center mb-4 text-white">Job Opportunities</h1>
+        
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title text-white">💼 Available Job Postings</h5>
+            
+            <div class="row">
+              <!-- Job 1 -->
+              <div class="col-md-6 mb-3">
+                <div class="card job-card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title text-white">Software Developer</h5>
+                    <h6 class="card-subtitle mb-2 text-white-50">Tech Company • Remote</h6>
+                    <p class="card-text small text-info">Posted: Today</p>
+                    <p class="card-text text-white-50">We're looking for an experienced developer to join our team. You'll be working on exciting projects using cutting-edge technology.</p>
+                    <a href="https://www.linkedin.com/jobs/" target="_blank" class="btn btn-primary btn-sm">View Job</a>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Job 2 -->
+              <div class="col-md-6 mb-3">
+                <div class="card job-card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title text-white">Data Analyst</h5>
+                    <h6 class="card-subtitle mb-2 text-white-50">Analytics Inc • New York, NY</h6>
+                    <p class="card-text small text-info">Posted: Yesterday</p>
+                    <p class="card-text text-white-50">A top financial firm is looking for a Data Analyst to join their team. Experience with SQL and data visualization required.</p>
+                    <a href="https://www.indeed.com/jobs" target="_blank" class="btn btn-primary btn-sm">View Job</a>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Job 3 -->
+              <div class="col-md-6 mb-3">
+                <div class="card job-card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title text-white">Machine Learning Engineer</h5>
+                    <h6 class="card-subtitle mb-2 text-white-50">TechCorp • San Francisco, CA</h6>
+                    <p class="card-text small text-info">Posted: Yesterday</p>
+                    <p class="card-text text-white-50">Join our AI team to develop cutting-edge machine learning models. Strong background in ML algorithms and Python required.</p>
+                    <a href="https://www.linkedin.com/jobs/" target="_blank" class="btn btn-primary btn-sm">View Job</a>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Job 4 -->
+              <div class="col-md-6 mb-3">
+                <div class="card job-card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title text-white">Product Manager</h5>
+                    <h6 class="card-subtitle mb-2 text-white-50">Innovation Labs • Remote</h6>
+                    <p class="card-text small text-info">Posted: 2 days ago</p>
+                    <p class="card-text text-white-50">Lead product development for our SaaS solutions. 3+ years of experience in tech product management preferred.</p>
+                    <a href="https://www.glassdoor.com/Job/" target="_blank" class="btn btn-primary btn-sm">View Job</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-4">
+          <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+      </div>
+    </body>
+    </html>
+    """
+    return render_template_string(jobs_html)
+
+if __name__ == '__main__':
     app.run(debug=True)

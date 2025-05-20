@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Logo Classification Test</h1>
+    
+    <!-- Upload Form -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Upload Logo</h5>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Select Logo Image</label>
+                    <input type="file" class="form-control" id="file" name="file" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Classify Logo</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Results -->
+    {% if result %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Classification Result</h5>
+            <div class="alert alert-success">
+                <strong>Identified Technology:</strong> {{ result }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Debug Information -->
+    {% if debug_info %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Debug Information</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>File Information</h6>
+                    <ul class="list-unstyled">
+                        <li><strong>Filename:</strong> {{ debug_info.filename }}</li>
+                        <li><strong>File Size:</strong> {{ debug_info.file_size }} bytes</li>
+                        <li><strong>Dimensions:</strong> {{ debug_info.image_dimensions }}</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h6>Color Information</h6>
+                    <ul class="list-unstyled">
+                        <li><strong>R Mean:</strong> {{ debug_info.color_info.r_mean }}</li>
+                        <li><strong>G Mean:</strong> {{ debug_info.color_info.g_mean }}</li>
+                        <li><strong>B Mean:</strong> {{ debug_info.color_info.b_mean }}</li>
+                        <li><strong>Brightness:</strong> {{ debug_info.color_info.brightness }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6>Shape Information</h6>
+                    <ul class="list-unstyled">
+                        <li><strong>Is Square:</strong> {{ debug_info.shape_info.is_square }}</li>
+                        <li><strong>Aspect Ratio:</strong> {{ debug_info.shape_info.aspect_ratio }}</li>
+                        <li><strong>Has Circles:</strong> {{ debug_info.shape_info.has_circles }}</li>
+                        <li><strong>Has Text:</strong> {{ debug_info.shape_info.has_text }}</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h6>Feature Scores</h6>
+                    <ul class="list-unstyled">
+                        <li><strong>Edge Intensity:</strong> {{ debug_info.feature_scores.edge_intensity }}</li>
+                        <li><strong>Color Variance:</strong> {{ debug_info.feature_scores.color_variance }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

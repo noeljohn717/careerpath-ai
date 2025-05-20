@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Tool Classification Result - CareerPath.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4 text-white">Tool Classification Result</h1>
+    
+    <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+            <h5 class="card-title text-white">🛠️ Identified Tool or Skill</h5>
+            <h2 class="display-5 fw-bold text-white mb-4">{{ classification }}</h2>
+            
+            {% set tech_descriptions = {
+                "React": "A JavaScript library for building user interfaces, particularly single-page applications. It's maintained by Meta (formerly Facebook) and used by companies like Instagram, Netflix, and Airbnb.",
+                "Angular": "A TypeScript-based front-end web application framework led by Google. Popular for building enterprise-level applications.",
+                "Vue.js": "A progressive JavaScript framework for building user interfaces. Known for its simplicity and flexibility.",
+                "Node.js": "A JavaScript runtime built on Chrome's V8 engine, allowing developers to run JavaScript on the server side.",
+                "Python": "A versatile programming language known for its readable syntax and wide application in data science, web development, and automation.",
+                "JavaScript": "The programming language of the web that enables interactive websites and is essential for front-end development.",
+                "TypeScript": "A strongly typed programming language that builds on JavaScript, adding types for better development experience.",
+                "Java": "A class-based, object-oriented programming language widely used for enterprise applications and Android development.",
+                "MongoDB": "A NoSQL database that uses a document-oriented data model with flexible schema, popular for modern web applications.",
+                "MySQL": "A widely-used relational database management system that's known for its reliability and performance.",
+                "Docker": "A platform that enables developers to automate the deployment of applications inside lightweight containers.",
+                "Git": "A distributed version control system for tracking changes in source code during software development.",
+                "GitHub": "A web-based hosting service for git repositories, providing collaboration tools for software development.",
+                "TensorFlow": "An open-source machine learning framework developed by Google for building and training neural networks.",
+                "Visual Studio Code": "A free source-code editor made by Microsoft for Windows, Linux and macOS, with powerful features for development.",
+                "Adobe Photoshop": "Industry-standard software for graphic design, photo editing, and digital art creation.",
+                "LinkedIn": "A professional networking platform used for career development, job searching, and business connections.",
+                "Microsoft Excel": "A spreadsheet program with calculation, graphing tools, pivot tables, and a macro programming language.",
+                "Technology Logo": "A technology or programming tool that our system couldn't identify with high confidence."
+            } %}
+            
+            {% if classification in tech_descriptions %}
+                <p class="text-white-50">{{ tech_descriptions[classification] }}</p>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+            <h5 class="card-title text-white">🎯 Career Recommendations</h5>
+            <ul class="text-white">
+                {% for suggestion in suggestions %}
+                <li>🔹 {{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+            <h5 class="card-title text-white">Upload Another Image</h5>
+            <form action="{{ url_for('main.classify_image') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" class="form-control mb-2" required>
+                <button type="submit" class="btn" style="background-color: #4cafef; color: white;">Classify</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="{{ url_for('main.dashboard') }}" class="btn" style="background-color: #6c757d; color: white;">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

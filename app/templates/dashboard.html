@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - CareerPath.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  {% if current_user.is_authenticated %}
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold text-white mb-2">
+        {% set hour = now.hour %}
+        {% if hour < 12 %}
+          ☀️ Good morning, {{ current_user.username }}!
+        {% elif hour < 18 %}
+          🌤️ Good afternoon, {{ current_user.username }}!
+        {% else %}
+          🌙 Good evening, {{ current_user.username }}!
+        {% endif %}
+      </h1>
+      <p class="lead text-white-50">Welcome to your personal Career Dashboard</p>
+    </div>
+  {% else %}
+    <h1 class="text-center mb-4 text-white">Welcome to Your Career Dashboard</h1>
+  {% endif %}
+
+  {% if current_user.is_authenticated and current_user.is_premium %}
+  <div class="alert text-center mb-4" style="background-color: #ffd700; color: #000; font-weight: bold; border-radius: 5px;">
+    🌟 Premium Member 🌟
+  </div>
+  {% endif %}
+
+  <div class="row">
+    <!-- Personality Quiz -->
+    <div class="col-md-6 mb-4">
+      <div class="card text-center shadow-sm" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+          <h5 class="card-title text-white">Take Personality Quiz</h5>
+          <a href="/quiz" class="btn" style="background-color: #4cafef; color: white;">Start Quiz</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload Tool or Skill Image -->
+    <div class="col-md-6 mb-4">
+      <div class="card text-center shadow-sm" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+          <h5 class="card-title text-white">Upload Tool or Skill Image</h5>
+          <p class="text-white-50 small mb-3">Enhanced AI classification can now identify over 40 different technologies and programming languages.</p>
+          <form action="{{ url_for('main.classify_image') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" class="form-control mb-2" required>
+            <button type="submit" class="btn" style="background-color: #4cafef; color: white;">Classify</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Upload Resume -->
+    <div class="col-md-6 mb-4">
+      <div class="card text-center shadow-sm" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+          <h5 class="card-title text-white">Upload Your Resume</h5>
+          <form action="{{ url_for('main.analyze_resume') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="resume_file" accept=".pdf,.txt,.doc,.docx" class="form-control mb-2" required>
+            <button type="submit" class="btn" style="background-color: #4cafef; color: white;">Analyze</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ask AI Career Coach -->
+    <div class="col-md-6 mb-4">
+      <div class="card text-center shadow-sm" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+        <div class="card-body">
+          <h5 class="card-title text-white">Ask the AI Career Coach</h5>
+          <form action="{{ url_for('main.ask') }}" method="post">
+            <input type="text" name="user_question" placeholder="Ask a career question..." class="form-control mb-2" required>
+            <button type="submit" class="btn" style="background-color: #4cafef; color: white;">Ask</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if suggestions %}
+  <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+    <div class="card-body">
+      <h5 class="card-title text-white">🎯 Career Recommendations</h5>
+      <ul class="text-white">
+        {% for suggestion in suggestions %}
+        <li>🔹 {{ suggestion }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if resume_feedback %}
+  <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+    <div class="card-body">
+      <h5 class="card-title text-white">📄 Resume Feedback</h5>
+      <p class="text-white">{{ resume_feedback }}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if blog_post %}
+  <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+    <div class="card-body">
+      <h5 class="card-title text-white">✍️ Your AI-Generated Career Blog</h5>
+      <div class="text-white">{{ blog_post|safe }}</div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if personality_match %}
+  <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+    <div class="card-body">
+      <h5 class="card-title text-white">🧠 Personality-Matched Role</h5>
+      <strong class="text-white">{{ personality_match }}</strong>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if image_suggestion %}
+  <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+    <div class="card-body">
+      <h5 class="card-title text-white">🖼️ Tool Suggestions from Uploaded Image</h5>
+      <p class="text-white">{{ image_suggestion }}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if chatbot_reply %}
+  <div class="card shadow-sm mb-4" style="background-color: rgba(255, 255, 255, 0.1); border: none;">
+    <div class="card-body">
+      <h5 class="card-title text-white">🤖 AI Career Coach</h5>
+      
+      {% if user_question %}
+      <div class="d-flex mb-3">
+        <div class="mr-3" style="min-width: 40px; width: 40px; height: 40px; border-radius: 50%; background-color: #6c757d; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+          <span style="color: white; font-weight: bold;">You</span>
+        </div>
+        <div class="p-3" style="background-color: rgba(108, 117, 125, 0.3); border-radius: 15px; flex-grow: 1;">
+          <p class="mb-0 text-white">{{ user_question }}</p>
+        </div>
+      </div>
+      {% endif %}
+      
+      <div class="d-flex">
+        <div class="mr-3" style="min-width: 40px; width: 40px; height: 40px; border-radius: 50%; background-color: #4cafef; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+          <span style="color: white; font-weight: bold;">AI</span>
+        </div>
+        <div class="p-3" style="background-color: rgba(76, 175, 239, 0.3); border-radius: 15px; flex-grow: 1;">
+          {% for paragraph in chatbot_reply.split('\n\n') %}
+            <p class="mb-2 text-white">{{ paragraph|safe }}</p>
+          {% endfor %}
+          
+          {% if not '\n\n' in chatbot_reply %}
+            {% for paragraph in chatbot_reply.split('\n') %}
+              {% if not loop.first %}<p class="mb-2 text-white">{{ paragraph|safe }}</p>{% endif %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="text-center mt-4">
+    <a href="/" class="btn" style="background-color: #6c757d; color: white;">🔁 Go Back to Home</a>
+  </div>
+</div>
+{% endblock %}
